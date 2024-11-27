@@ -7,20 +7,16 @@ using UnityEditor.Build.Reporting;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-class MyCustomBuildProcessor : IPreprocessBuildWithReport
+public class MyCustomBuildProcessor : IPreprocessBuildWithReport
 {
-    public int callbackOrder
-    {
-        get { return 0; }
-    }
+    public int callbackOrder => 1;
 
     public void OnPreprocessBuild(BuildReport report)
     {
-#if UNITY_CLOUD_BUILD
-        string arguments = "status --header --machinereadable";
         string executablePath;
+        string arguments = "status --header --machinereadable";
 
-	    executablePath = System.Environment.GetEnvironmentVariable("PLASTIC_CM_PATH");
+        executablePath = System.Environment.GetEnvironmentVariable("PLASTIC_CM_PATH");
 	    var plasticConfPath = System.Environment.GetEnvironmentVariable("PROJECT_DIRECTORY");
 	    arguments += $" --clientconf=\"{Path.Combine(plasticConfPath, "client.conf")}\" --tokensconf=\"{ Path.Combine(plasticConfPath, "tokens.conf")}\"";
         
@@ -36,6 +32,5 @@ class MyCustomBuildProcessor : IPreprocessBuildWithReport
             RedirectStandardError = true,
             UseShellExecute = false
         });
-#endif
     }
 }
