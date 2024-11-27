@@ -19,7 +19,7 @@ class MyCustomBuildProcessor : IPreprocessBuildWithReport
         string arguments = "status --header --machinereadable";
         string executablePath;
 
-        if (Application.platform == RuntimePlatform.OSXEditor)
+        if (Application.platform == RuntimePlatform.Android)
         {
 #if UNITY_CLOUD_BUILD
 	        executablePath = System.Environment.GetEnvironmentVariable("PLASTIC_CM_PATH");
