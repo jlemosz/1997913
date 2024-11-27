@@ -18,7 +18,10 @@ class MyCustomBuildProcessor : IPreprocessBuildWithReport
     {
         string arguments = "status --header --machinereadable";
         string executablePath;
-        
+
+        Debug.Log($"APPLICATION PLATFORM: {Application.platform}");
+        Debug.Log($"RUNTIME PLATFORM: {RuntimePlatform.WindowsEditor}");
+            
         if (Application.platform == RuntimePlatform.WindowsEditor)
         {
 #if UNITY_CLOUD_BUILD
