@@ -18,6 +18,8 @@ class MyCustomBuildProcessor : IPreprocessBuildWithReport
     {
         string arguments = "status --header --machinereadable";
         string executablePath;
+        
+        Debug.Log($"RUNTIME PLATFORM: {Application.platform}");
 
         if (Application.platform == RuntimePlatform.Android)
         {
