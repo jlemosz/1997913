@@ -16,33 +16,17 @@ class MyCustomBuildProcessor : IPreprocessBuildWithReport
 
     public void OnPreprocessBuild(BuildReport report)
     {
+#if UNITY_CLOUD_BUILD
         string arguments = "status --header --machinereadable";
         string executablePath;
 
-        Debug.Log($"APPLICATION PLATFORM: {Application.platform}");
-        Debug.Log($"RUNTIME PLATFORM: {RuntimePlatform.WindowsEditor}");
-            
-        if (Application.platform == RuntimePlatform.WindowsEditor)
-        {
-#if UNITY_CLOUD_BUILD
-	        executablePath = System.Environment.GetEnvironmentVariable("PLASTIC_CM_PATH");
-	        var plasticConfPath = System.Environment.GetEnvironmentVariable("PROJECT_DIRECTORY");
-	        arguments += $" --clientconf=\"{Path.Combine(plasticConfPath, "client.conf")}\" --tokensconf=\"{ Path.Combine(plasticConfPath, "tokens.conf")}\"";
-            
-            Debug.Log($"PLASTIC CM PATH = {executablePath}");
-            Debug.Log($"PATH TO CONF FILE = {plasticConfPath}");
-            Debug.Log($"ARGUMENTS = {arguments}");
-#else
-            // Local Mac
-            executablePath = "/usr/local/bin/cm";
-#endif
-        }
-        else
-        {
-            // On Windows, cm.exe is in %PATH%. This works both on a local Windows computer
-            // and on Unity Build Automation.
-            executablePath = "cm";
-        }
+	    executablePath = System.Environment.GetEnvironmentVariable("PLASTIC_CM_PATH");
+	    var plasticConfPath = System.Environment.GetEnvironmentVariable("PROJECT_DIRECTORY");
+	    arguments += $" --clientconf=\"{Path.Combine(plasticConfPath, "client.conf")}\" --tokensconf=\"{ Path.Combine(plasticConfPath, "tokens.conf")}\"";
+        
+        Debug.Log($"PLASTIC CM PATH = {executablePath}");
+        Debug.Log($"PATH TO CONF FILE = {plasticConfPath}");
+        Debug.Log($"ARGUMENTS = {arguments}");
 
         var process = Process.Start(new ProcessStartInfo
         {
@@ -52,5 +36,6 @@ class MyCustomBuildProcessor : IPreprocessBuildWithReport
             RedirectStandardError = true,
             UseShellExecute = false
         });
+#endif
     }
 }
