@@ -17,9 +17,15 @@ public class MyCustomBuildProcessor : IPreprocessBuildWithReport
         string arguments = "status --header --machinereadable";
 
         executablePath = System.Environment.GetEnvironmentVariable("PLASTIC_CM_PATH");
-	    var plasticConfPath = System.Environment.GetEnvironmentVariable("PROJECT_DIRECTORY");
+	    
+        /*
+        var plasticConfPath = System.Environment.GetEnvironmentVariable("PROJECT_DIRECTORY");
 	    arguments += $" --clientconf=\"{Path.Combine(plasticConfPath, "client.conf")}\" --tokensconf=\"{ Path.Combine(plasticConfPath, "tokens.conf")}\"";
+	    */
         
+        var plasticConfPath = Directory.GetCurrentDirectory();
+        arguments += $" --clientconf=\"{Path.Combine(plasticConfPath, "client.conf")}\" --tokensconf=\"{Path.Combine(plasticConfPath, "tokens.conf")}\"";
+
         Debug.Log($"PLASTIC CM PATH = {executablePath}");
         Debug.Log($"PATH TO CONF FILE = {plasticConfPath}");
         Debug.Log($"ARGUMENTS = {arguments}");
