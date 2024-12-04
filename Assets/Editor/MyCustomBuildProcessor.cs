@@ -34,6 +34,11 @@ public class MyCustomBuildProcessor : IPreprocessBuildWithReport
         var currentDirectory = Directory.GetCurrentDirectory();
         Debug.Log($"CURRENT DIRECTORY = {currentDirectory}");
         
+        Debug.Log($"EditorApplication.applicationPath = {EditorApplication.applicationPath}");
+        
+        var appPath = System.Environment.GetEnvironmentVariable("APPLICATION_PATH");
+        Debug.Log($"APP PATH = {appPath}");
+        
         /*
         Debug.Log($"PLASTIC CM PATH = {executablePath}");
         Debug.Log($"PATH TO CONF FILE = {plasticConfPath}");
